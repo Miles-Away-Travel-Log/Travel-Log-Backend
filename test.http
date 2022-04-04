@@ -1,0 +1,27 @@
+post http://localhost:4000/users/register
+Content-Type: application/json
+
+{
+  "firstName": "test2",
+  "lastName": "test2",
+  "email": "test2@test.de",
+  "password": "12345678",
+  "city": "Berlin",
+  "country": "Germany",
+  "userName": "test2-UserName"
+}
+
+
+###
+
+post http://localhost:4000/users/login
+Content-Type: application/json
+
+{
+  "userName": "test2-UserName",
+  "password": "12345678"
+}
+
+###
+
+get http://localhost:4000/users/624ab22cedfba008a0afeb6d
