@@ -71,18 +71,16 @@ export async function register(req, res) {
     const errors = validationResult(req);
 
     if (errors.isEmpty()) {
-        /*     if (
-        !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/? ]).{8,}$/.test(
-          password
-        )
-      ) {
-        res
-          .status(400)
-          .send(
-            'Password should contain number, uppercase, lowercase, special character.'
-          );
-        return;
-      } */
+        if (
+            !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/? ]).{8,}$/.test(
+                req.body.password
+            )
+        ) {
+            res.status(400).send(
+                "Password should contain number, uppercase, lowercase, special character."
+            );
+            return;
+        }
         const {
             firstName,
             lastName,

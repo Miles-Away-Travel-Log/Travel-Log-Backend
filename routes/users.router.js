@@ -7,36 +7,29 @@ const routerUsers = new Router();
 routerUsers.route("/login").post(login);
 routerUsers.route("/register").post(
     body("firstName")
-        .isString()
+        .isAlpha()
+        .withMessage("First name must be alphabetic")
         .isLength({ min: 3, max: 20 })
-        .withMessage(
-            "First name must be between 3 and 20 characters and contains only letters"
-        ),
+        .withMessage("First name must be between 3 and 20 characters"),
     body("lastName")
-        .isString()
+        .isAlpha()
+        .withMessage("Last name must be alphabetic")
         .isLength({ min: 3, max: 20 })
-        .withMessage(
-            "Last name must be between 3 and 20 characters and contains only letters"
-        ),
+        .withMessage("Last name must be between 3 and 20 characters"),
     body("userName")
-        .isAlphanumeric()
         .isLength({ min: 3, max: 10 })
-        .withMessage(
-            "User name must be between 3 and 10 characters and contains only letters and numbers"
-        ),
+        .withMessage("User name must be between 3 and 10 characters"),
     body("email").isEmail().withMessage("Email must be a valid email address"),
     body("city")
-        .isString()
+        .isAlpha()
+        .withMessage("City must be alphabetic")
         .isLength({ min: 3, max: 30 })
-        .withMessage(
-            "City must be between 3 and 30 characters and contains only letters"
-        ),
+        .withMessage("City must be between 3 and 30 characters"),
     body("country")
-        .isString()
+        .isAlpha()
+        .withMessage("Country must be alphabetic")
         .isLength({ min: 3, max: 30 })
-        .withMessage(
-            "Country must be between 3 and 30 characters and contains only letters"
-        ),
+        .withMessage("Country must be between 3 and 30 characters"),
 
     register
 );
