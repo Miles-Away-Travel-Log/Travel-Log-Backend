@@ -1,6 +1,7 @@
 import User from "../models/users.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { validationResult } from "express-validator";
 
 // get User
 
@@ -67,39 +68,53 @@ export async function login(req, res) {
 // Register
 
 export async function register(req, res) {
-    /*     if (
-        !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/? ]).{8,}$/.test(
-          password
-        )
-      ) {
-        res
-          .status(400)
-          .send(
-            'Password should contain number, uppercase, lowercase, special character.'
-          );
-        return;
-      } */
-    const { firstName, lastName, userName, city, country, email, password } =
-        req.body;
-    const user = await User.findOne({ email });
-    if (user) {
-        res.status(400).send("User already exists");
-        return;
-    }
-    const newPassword = await bcrypt.hash(password, 10);
+    const errors = validationResult(req);
 
-    try {
-        await User.create({
+    if (errors.isEmpty()) {
+        if (
+            !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/? ]).{8,}$/.test(
+                req.body.password
+            )
+        ) {
+            res.status(400).send(
+                "Password should contain number, uppercase, lowercase, special character."
+            );
+            return;
+        }
+        const {
             firstName,
             lastName,
-            email,
-            password: newPassword,
+            userName,
             city,
             country,
-            userName,
+            email,
+            password,
+        } = req.body;
+        const user = await User.findOne({ email });
+        if (user) {
+            res.status(400).send("User already exists");
+            return;
+        }
+        const newPassword = await bcrypt.hash(password, 10);
+
+        try {
+            await User.create({
+                firstName,
+                lastName,
+                email,
+                password: newPassword,
+                city,
+                country,
+                userName,
+            });
+            res.status(201).send("User created");
+        } catch (err) {
+            res.status(400).send(err);
+        }
+    } else {
+        res.status(400).json({
+            message: "Validation failed",
+            errors: errors.array(),
         });
-        res.status(201).send("User created");
-    } catch (err) {
-        res.status(400).send(err);
     }
 }
