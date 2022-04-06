@@ -7,7 +7,7 @@ import { validationResult } from "express-validator";
 
 export async function getUser(req, res) {
     const id = req.params.id;
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate("budget");
 
     if (user === undefined) {
         res.status(400).send("User not found");
@@ -24,6 +24,7 @@ export async function getUser(req, res) {
             city: user.city,
             country: user.country,
             userName: user.userName,
+            budget: user.budget,
         },
     });
 }
@@ -116,5 +117,40 @@ export async function register(req, res) {
             message: "Validation failed",
             errors: errors.array(),
         });
+    }
+}
+
+// delete User
+
+export async function deleteUser(req, res) {
+    const id = req.params.id;
+    const user = await User.findById({ _id: id });
+    if (!user) {
+        res.status(400).send("User not found");
+        return;
+    }
+    try {
+        await User.findByIdAndDelete({ _id: id });
+        res.status(200).send("User deleted");
+    } catch (err) {
+        res.status(400).send(err);
+    }
+}
+
+// update User
+
+export async function updateUser(req, res) {
+    const updatedUser = req.body;
+    const id = req.params.id;
+
+    if (!updatedUser || !id) {
+        res.status(400).send("User not found");
+        return;
+    }
+    try {
+        await User.findByIdAndUpdate({ _id: id }, updatedUser);
+        res.status(200).send("User updated");
+    } catch (error) {
+        res.status(400).send(error);
     }
 }
