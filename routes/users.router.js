@@ -1,5 +1,11 @@
 import { Router } from "express";
-import { getUser, login, register } from "../controllers/users.controller.js";
+import {
+    getUser,
+    login,
+    register,
+    deleteUser,
+    updateUser,
+} from "../controllers/users.controller.js";
 import { body } from "express-validator";
 
 const routerUsers = new Router();
@@ -33,6 +39,6 @@ routerUsers.route("/register").post(
 
     register
 );
-routerUsers.route("/:id").get(getUser);
+routerUsers.route("/:id").get(getUser).put(updateUser).delete(deleteUser);
 
 export default routerUsers;

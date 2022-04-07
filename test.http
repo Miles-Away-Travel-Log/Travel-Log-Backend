@@ -4,13 +4,27 @@ Content-Type: application/json
 {
   "firstName": "Moh",
   "lastName": "Moh",
-  "email": "moh@test.de",
+  "email": "moh2@test.de",
   "password": "123456",
   "city": "Hamburg",
   "country": "Germany",
   "userName": "Moh-82"
 }
 
+###
+
+put http://localhost:4000/users/624d3f2a9fc97d734768e091
+Content-Type: application/json
+
+{
+  "email": "moh2@test.de"
+}
+
+
+###
+
+
+delete http://localhost:4000/users/624d3f2a9fc97d734768e091
 
 ###
 
@@ -24,4 +38,64 @@ Content-Type: application/json
 
 ###
 
-get http://localhost:4000/users/624ab22cedfba008a0afeb6d
+get http://localhost:4000/users/624e9ae4882034612bc08eb9
+
+
+###
+
+
+post http://localhost:4000/budget
+Content-Type: application/json
+
+{
+  "type": "Present",
+  "value": 1299.99,
+  "date": "2022-04-06",
+  "category": "salary April",
+  "description": "Mein Lohn von 1299.99 Euro",
+  "user": "624d5c70adba58fdf3fe95f4"
+}
+
+###
+
+put http://localhost:4000/budget/624d857753ac9ccd98d1aadb
+Content-Type: application/json
+
+{
+  "type": "Income",
+  "value": 299.99,
+  "category": "salary",
+  "description": "Mein Lohn von 299.99 Euro",
+  "user": "624d3f2a9fc97d734768e091"
+}
+
+###
+
+delete http://localhost:4000/budget/624d8862377ebc157cd9f39b
+
+
+###
+
+
+post http://localhost:4000/Seed-money
+Content-Type: application/json
+
+{
+  "total": 800.00,
+  "user": "624e9ae4882034612bc08eb9"
+}
+
+###
+
+delete http://localhost:4000/seed-money/624ee4eb39bde8dc194ee57c
+
+
+###
+
+put http://localhost:4000/Seed-money/624ee57eebf507d8d6a09c53
+Content-Type: application/json
+
+{
+  "total": 849.99,
+  "user": "624e9ae4882034612bc08eb9"
+}
