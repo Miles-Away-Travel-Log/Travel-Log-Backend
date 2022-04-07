@@ -8,8 +8,8 @@ import { validationResult } from "express-validator";
 export async function getUser(req, res) {
     const id = req.params.id;
     const user = await User.findById(id)
-        .populate("budget")
         .populate("seedMoney")
+        .populate("budget")
         .exec();
 
     if (user === undefined) {
@@ -28,6 +28,7 @@ export async function getUser(req, res) {
             country: user.country,
             userName: user.userName,
             budget: user.budget,
+            seedMoney: user.seedMoney,
         },
     });
 }

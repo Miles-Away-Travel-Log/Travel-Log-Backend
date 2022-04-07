@@ -41,8 +41,8 @@ const userSchema = new Schema(
 );
 userSchema.virtual("seedMoney", {
     ref: "SeedMoney",
-    localField: "user",
-    foreignField: "_id",
+    localField: "_id",
+    foreignField: "user",
 });
 
 userSchema.virtual("budget", {
