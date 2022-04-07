@@ -7,7 +7,10 @@ import { validationResult } from "express-validator";
 
 export async function getUser(req, res) {
     const id = req.params.id;
-    const user = await User.findById(id).populate("budget");
+    const user = await User.findById(id)
+        .populate("budget")
+        .populate("seedMoney")
+        .exec();
 
     if (user === undefined) {
         res.status(400).send("User not found");

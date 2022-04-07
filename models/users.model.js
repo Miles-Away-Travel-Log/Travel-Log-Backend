@@ -39,6 +39,11 @@ const userSchema = new Schema(
         toObject: { virtuals: true },
     }
 );
+userSchema.virtual("seedMoney", {
+    ref: "SeedMoney",
+    localField: "user",
+    foreignField: "_id",
+});
 
 userSchema.virtual("budget", {
     ref: "Budget",
