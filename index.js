@@ -5,6 +5,7 @@ import "dotenv/config";
 import routerUsers from "./routes/users.router.js";
 import routerBudget from "./routes/budget.router.js";
 import routerSeedMoney from "./routes/seedMoney.router.js";
+import routerPDF from "./routes/pdf.router.js";
 
 const corsOption = {
     origin: process.env.ORIGIN_URL,
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 app.use("/users", routerUsers);
 app.use("/budget", routerBudget);
 app.use("/seed-money", routerSeedMoney);
+app.use("/pdf", routerPDF);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
