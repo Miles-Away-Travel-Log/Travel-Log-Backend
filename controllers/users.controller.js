@@ -29,6 +29,7 @@ export async function getUser(req, res) {
             userName: user.userName,
             budget: user.budget,
             seedMoney: user.seedMoney,
+            status: user.status
         },
     });
 }
