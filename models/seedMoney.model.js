@@ -6,6 +6,10 @@ const seedMoneySchema = new Schema({
         type: Number,
         required: true,
     },
+    currency: {
+        type: String,
+        required: true,
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

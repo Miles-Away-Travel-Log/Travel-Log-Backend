@@ -6,10 +6,11 @@ export async function postSeedMoney(req, res) {
     const errors = validationResult(req);
 
     if (errors.isEmpty()) {
-        const { total, user } = req.body;
+        const { total, currency, user } = req.body;
         try {
             const seedMoney = new SeedMoney({
                 total,
+                currency,
                 user,
             });
             await seedMoney.save();
@@ -18,6 +19,7 @@ export async function postSeedMoney(req, res) {
                 "Seed Money": {
                     id: seedMoney._id,
                     total: seedMoney.total,
+                    currency: seedMoney.currency,
                 },
             });
         } catch (error) {
