@@ -7,6 +7,7 @@ import {
     updateUser,
 } from "../controllers/users.controller.js";
 import { body } from "express-validator";
+import { permission } from "../middleware/Permission.js";
 
 const routerUsers = new Router();
 
@@ -39,6 +40,10 @@ routerUsers.route("/register").post(
 
     register
 );
-routerUsers.route("/:id").get(getUser).put(updateUser).delete(deleteUser);
+routerUsers
+    .route("/:id")
+    .get(getUser)
+    .put(permission(), updateUser)
+    .delete(permission(), deleteUser);
 
 export default routerUsers;

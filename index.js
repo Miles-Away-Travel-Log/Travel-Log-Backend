@@ -6,6 +6,7 @@ import routerUsers from "./routes/users.router.js";
 import routerBudget from "./routes/budget.router.js";
 import routerSeedMoney from "./routes/seedMoney.router.js";
 import routerPDF from "./routes/pdf.router.js";
+import { auth } from "./middleware/AuthMiddleWare.js";
 
 const corsOption = {
     origin: process.env.ORIGIN_URL,
@@ -26,6 +27,8 @@ const app = express();
 app.use(express.json());
 
 app.use(cors(corsOption));
+
+app.use(auth());
 
 app.get("/", (req, res) => {
     res.send("Welcome to Miles Away");
