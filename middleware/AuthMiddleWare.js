@@ -12,6 +12,7 @@ export function auth() {
 
         try {
             const content = jwt.verify(token, process.env.SECRET_JWT_KEY);
+            console.log(content.id);
             req.tokenContent = content;
             next();
         } catch (error) {

@@ -13,11 +13,17 @@ Content-Type: application/json
 
 ###
 
-put http://localhost:4000/users/624d3f2a9fc97d734768e091
+
+put http://localhost:4000/users/624e9ae4882034612bc08eb9
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGU5YWU0ODgyMDM0NjEyYmMwOGViOSIsImlhdCI6MTY1MDk2MTAzMX0.SfkJahktipbw1YYymhmlzq9KIROqY-vfPzt9FFv6uGU
+
 
 {
-  "email": "moh2@test.de"
+  "visible": true,
+  "sentRequest": [{"userId": "624d5c70adba58fdf3fe95f4"}],
+  "receivedRequest": [{"userId": "62614e57545b5ca036e52881"}],
+  "friendsList": [{"friendId": "62679d29dda06d67a9e1fdc0"}]
 }
 
 
@@ -32,8 +38,8 @@ post http://localhost:4000/users/login
 Content-Type: application/json
 
 {
-  "userName": "test2-UserName",
-  "password": "12345678"
+  "userName": "Moh82",
+  "password": "Dd12345!"
 }
 
 ###
@@ -43,6 +49,9 @@ get http://localhost:4000/users/624e9ae4882034612bc08eb9
 
 ###
 
+get http://localhost:4000/users
+
+###
 
 post http://localhost:4000/budget
 Content-Type: application/json
@@ -98,4 +107,16 @@ Content-Type: application/json
 {
   "total": 849.99,
   "user": "624e9ae4882034612bc08eb9"
+}
+
+
+###
+
+post http://localhost:4000/friend
+Content-Type: application/json
+
+{
+  "sentRequest": "624e9ae4882034612bc08eb9",
+  "receivedRequest": "62679d29dda06d67a9e1fdc0",
+  "status": false
 }

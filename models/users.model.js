@@ -34,8 +34,11 @@ const userSchema = new Schema(
             unique: true,
         },
         status: {
-            type: String
-        }
+            type: String,
+        },
+        visible: {
+            type: Boolean,
+        },
     },
     {
         toJSON: { virtuals: true },
