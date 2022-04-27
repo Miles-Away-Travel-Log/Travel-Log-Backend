@@ -30,6 +30,7 @@ export async function getUser(req, res) {
             budget: user.budget,
             seedMoney: user.seedMoney,
             status: user.status,
+            avatar: user.avatar
         },
     });
 }
@@ -61,6 +62,7 @@ export async function login(req, res) {
                     city: user.city,
                     country: user.country,
                     userName: user.userName,
+                    avatar: user.avatar
                 },
             });
         } else {

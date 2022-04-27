@@ -35,7 +35,8 @@ const userSchema = new Schema(
         },
         status: {
             type: String
-        }
+        },
+        avatar: String
     },
     {
         toJSON: { virtuals: true },
