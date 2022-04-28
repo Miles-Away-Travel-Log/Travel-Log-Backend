@@ -30,7 +30,7 @@ export async function getUser(req, res) {
             budget: user.budget,
             seedMoney: user.seedMoney,
             status: user.status,
-            avatar: user.avatar
+            avatar: user.avatar,
         },
     });
 }
@@ -62,7 +62,7 @@ export async function login(req, res) {
                     city: user.city,
                     country: user.country,
                     userName: user.userName,
-                    avatar: user.avatar
+                    avatar: user.avatar,
                 },
             });
         } else {
@@ -155,7 +155,7 @@ export async function updateUser(req, res) {
         return;
     }
     try {
-        await User.findByIdAndUpdate({ _id: id }, updatedUser);
+        await User.findByIdAndUpdate(id, updatedUser);
         res.status(200).send("User updated");
     } catch (error) {
         res.status(400).send(error);
