@@ -4,7 +4,6 @@ import Friend from "../models/friends.model.js";
 
 export async function postFriend(req, res) {
     const { sentRequest, receivedRequest, status } = req.body;
-    console.log(req.body);
     try {
         const friend = new Friend({
             sentRequest,

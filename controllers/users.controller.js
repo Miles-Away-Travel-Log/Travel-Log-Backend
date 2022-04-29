@@ -188,9 +188,7 @@ export async function deleteUser(req, res) {
 export async function updateUser(req, res) {
     const errors = validationResult(req);
     const id = req.params.id;
-    console.log("id:", id);
     const updatedUser = req.body;
-    console.log("body", updatedUser);
 
     if (!updatedUser || !id) {
         res.status(400).send("User not found");
