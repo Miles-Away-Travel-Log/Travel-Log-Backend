@@ -39,6 +39,7 @@ export async function getUser(req, res) {
             seedMoney: user.seedMoney,
             status: user.status,
             friends: aggregateFriends,
+            avatar: user.avatar
         },
     });
 }
@@ -102,6 +103,8 @@ export async function login(req, res) {
                     country: user.country,
                     userName: user.userName,
                     friends: aggregateFriends,
+                    avatar: user.avatar
+
                 },
             });
         } else {
