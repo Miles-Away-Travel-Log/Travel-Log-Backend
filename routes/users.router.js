@@ -5,6 +5,7 @@ import {
     register,
     deleteUser,
     updateUser,
+    getAllUser,
 } from "../controllers/users.controller.js";
 import { body } from "express-validator";
 import { permission } from "../middleware/Permission.js";
@@ -43,7 +44,43 @@ routerUsers.route("/register").post(
 routerUsers
     .route("/:id")
     .get(getUser)
-    .put(permission(), updateUser)
+    .put(
+        body("firstName")
+            .optional()
+            .isAlpha()
+            .withMessage("First name must be alphabetic")
+            .isLength({ min: 3, max: 20 })
+            .withMessage("First name must be between 3 and 20 characters"),
+        body("lastName")
+            .optional()
+            .isAlpha()
+            .withMessage("Last name must be alphabetic")
+            .isLength({ min: 3, max: 20 })
+            .withMessage("Last name must be between 3 and 20 characters"),
+        body("userName")
+            .optional()
+            .isLength({ min: 3, max: 10 })
+            .withMessage("User name must be between 3 and 10 characters"),
+        body("email")
+            .optional()
+            .isEmail()
+            .withMessage("Email must be a valid email address"),
+        body("city")
+            .optional()
+            .isAlpha()
+            .withMessage("City must be alphabetic")
+            .isLength({ min: 3, max: 30 })
+            .withMessage("City must be between 3 and 30 characters"),
+        body("country")
+            .optional()
+            .isAlpha()
+            .withMessage("Country must be alphabetic")
+            .isLength({ min: 3, max: 30 })
+            .withMessage("Country must be between 3 and 30 characters"),
+        permission(),
+        updateUser
+    )
     .delete(permission(), deleteUser);
 
+routerUsers.route("/").get(getAllUser);
 export default routerUsers;
