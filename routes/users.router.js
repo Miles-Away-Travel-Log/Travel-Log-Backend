@@ -28,16 +28,6 @@ routerUsers.route("/register").post(
         .isLength({ min: 3, max: 10 })
         .withMessage("User name must be between 3 and 10 characters"),
     body("email").isEmail().withMessage("Email must be a valid email address"),
-    body("city")
-        .isAlpha()
-        .withMessage("City must be alphabetic")
-        .isLength({ min: 3, max: 30 })
-        .withMessage("City must be between 3 and 30 characters"),
-    body("country")
-        .isAlpha()
-        .withMessage("Country must be alphabetic")
-        .isLength({ min: 3, max: 30 })
-        .withMessage("Country must be between 3 and 30 characters"),
 
     register
 );
@@ -65,18 +55,6 @@ routerUsers
             .optional()
             .isEmail()
             .withMessage("Email must be a valid email address"),
-        body("city")
-            .optional()
-            .isAlpha()
-            .withMessage("City must be alphabetic")
-            .isLength({ min: 3, max: 30 })
-            .withMessage("City must be between 3 and 30 characters"),
-        body("country")
-            .optional()
-            .isAlpha()
-            .withMessage("Country must be alphabetic")
-            .isLength({ min: 3, max: 30 })
-            .withMessage("Country must be between 3 and 30 characters"),
         permission(),
         updateUser
     )

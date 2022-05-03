@@ -20,14 +20,6 @@ const userSchema = new Schema(
             type: String,
             required: true,
         },
-        city: {
-            type: String,
-            required: true,
-        },
-        country: {
-            type: String,
-            required: true,
-        },
         userName: {
             type: String,
             required: true,
@@ -39,8 +31,35 @@ const userSchema = new Schema(
         visible: {
             type: Boolean,
         },
-        avatar: String
+        avatar: {
+            type: String,
         },
+        mapStyle: {
+            name: {
+                type: String,
+            },
+            link: {
+                type: String,
+            },
+            iconColor: {
+                type: String,
+            },
+        },
+        home: {
+            longitude: {
+                type: Number,
+            },
+            latitude: {
+                type: Number,
+            },
+            city: {
+                type: String,
+            },
+            country: {
+                type: String,
+            },
+        },
+    },
     {
         toJSON: { virtuals: true },
         toObject: { virtuals: true },

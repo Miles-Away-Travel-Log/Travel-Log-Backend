@@ -32,14 +32,23 @@ export async function getUser(req, res) {
             email: user.email,
             firstName: user.firstName,
             lastName: user.lastName,
-            city: user.city,
-            country: user.country,
             userName: user.userName,
             budget: user.budget,
             seedMoney: user.seedMoney,
             status: user.status,
             friends: aggregateFriends,
-            avatar: user.avatar
+            avatar: user.avatar,
+            mapStyle: {
+                name: user.mapStyle.name,
+                link: user.mapStyle.link,
+                iconColor: user.mapStyle.iconColor,
+            },
+            home: {
+                longitude: user.home.longitude,
+                latitude: user.home.latitude,
+                city: user.home.city,
+                country: user.home.country,
+            },
         },
     });
 }
@@ -99,12 +108,20 @@ export async function login(req, res) {
                     email: user.email,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    city: user.city,
-                    country: user.country,
                     userName: user.userName,
                     friends: aggregateFriends,
-                    avatar: user.avatar
-
+                    avatar: user.avatar,
+                    mapStyle: {
+                        name: user.mapStyle.name,
+                        link: user.mapStyle.link,
+                        iconColor: user.mapStyle.iconColor,
+                    },
+                    home: {
+                        longitude: user.home.longitude,
+                        latitude: user.home.latitude,
+                        city: user.home.city,
+                        country: user.home.country,
+                    },
                 },
             });
         } else {
@@ -135,10 +152,12 @@ export async function register(req, res) {
             firstName,
             lastName,
             userName,
-            city,
-            country,
+            // city,
+            // country,
             email,
             password,
+            mapStyle,
+            home
         } = req.body;
         const user = await User.findOne({ email });
         if (user) {
@@ -153,9 +172,11 @@ export async function register(req, res) {
                 lastName,
                 email,
                 password: newPassword,
-                city,
-                country,
+                // city,
+                // country,
                 userName,
+                mapStyle,
+                home,
             });
             res.status(201).send("User created");
         } catch (err) {
