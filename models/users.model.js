@@ -39,8 +39,8 @@ const userSchema = new Schema(
         visible: {
             type: Boolean,
         },
-        avatar: String
-        },
+        avatar: String,
+    },
     {
         toJSON: { virtuals: true },
         toObject: { virtuals: true },

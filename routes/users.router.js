@@ -43,7 +43,7 @@ routerUsers.route("/register").post(
 );
 routerUsers
     .route("/:id")
-    .get(getUser)
+    .get(permission(), getUser)
     .put(
         body("firstName")
             .optional()

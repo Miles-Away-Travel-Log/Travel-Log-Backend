@@ -3,27 +3,59 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import Friend from "../models/friends.model.js";
+
 // get User
 
 export async function getUser(req, res) {
     const id = req.params.id;
-    const user = await User.findById(id)
-        .populate("seedMoney")
-        .populate("budget")
-        .exec();
+    const idFromToken = req.tokenContent.id;
+    const userNameFromToken = req.tokenContent.userName;
 
-    if (user === undefined) {
+    let user;
+    let aggregateFriends;
+
+    if (id.length > 10 && idFromToken === id) {
+        user = await User.findById(id)
+            .populate("seedMoney")
+            .populate("budget")
+            .exec();
+
+        aggregateFriends = await Friend.aggregate([
+            {
+                $match: {
+                    $or: [
+                        { sentRequest: user._id },
+                        { receivedRequest: user._id },
+                    ],
+                },
+            },
+        ]);
+    } else if (id.length > 10 && idFromToken !== id) {
+        user = await User.findById(id).select("-password").exec();
+    } else if (id.length <= 10 && userNameFromToken === id) {
+        user = await User.findOne({ userName: id })
+            .populate("seedMoney")
+            .populate("budget")
+            .exec();
+
+        aggregateFriends = await Friend.aggregate([
+            {
+                $match: {
+                    $or: [
+                        { sentRequest: user._id },
+                        { receivedRequest: user._id },
+                    ],
+                },
+            },
+        ]);
+    } else if (id.length <= 10 && userNameFromToken !== id) {
+        user = await User.findOne({ userName: id }).select("-password").exec();
+    }
+
+    if (user === undefined || !user) {
         res.status(400).send("User not found");
         return;
     }
-
-    const aggregateFriends = await Friend.aggregate([
-        {
-            $match: {
-                $or: [{ sentRequest: user._id }, { receivedRequest: user._id }],
-            },
-        },
-    ]);
 
     res.status(200).json({
         message: "User found",
@@ -38,8 +70,8 @@ export async function getUser(req, res) {
             budget: user.budget,
             seedMoney: user.seedMoney,
             status: user.status,
-            friends: aggregateFriends,
-            avatar: user.avatar
+            friends: aggregateFriends ? aggregateFriends : [],
+            avatar: user.avatar,
         },
     });
 }
@@ -88,7 +120,7 @@ export async function login(req, res) {
         const newPassword = await bcrypt.compare(password, user.password);
         if (newPassword === true) {
             const token = jwt.sign(
-                { id: user._id },
+                { id: user._id, userName: user.userName },
                 process.env.SECRET_JWT_KEY
             );
             res.status(200).json({
@@ -103,8 +135,7 @@ export async function login(req, res) {
                     country: user.country,
                     userName: user.userName,
                     friends: aggregateFriends,
-                    avatar: user.avatar
-
+                    avatar: user.avatar,
                 },
             });
         } else {

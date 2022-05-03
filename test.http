@@ -45,7 +45,9 @@ Content-Type: application/json
 ###
 
 
-get http://localhost:4000/users/626a7adc4857f368b56a29b2
+get http://localhost:4000/users/Moh86
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNmE3YWRjNDg1N2YzNjhiNTZhMjliMiIsInVzZXJOYW1lIjoiTW9oODIiLCJpYXQiOjE2NTE1ODMzNDR9.BXMgE0XPLEiAE5xraKllmuaS_e-kB5ddTWHI4s5f2C4
 
 
 
@@ -118,7 +120,7 @@ post http://localhost:4000/friend
 Content-Type: application/json
 
 {
-  "sentRequest": "624e9ae4882034612bc08eb9",
-  "receivedRequest": "62679d29dda06d67a9e1fdc0",
+  "sentRequest": "626a7adc4857f368b56a29b2",
+  "receivedRequest": "6270dde6e87b8eebd7d2d827",
   "status": false
 }

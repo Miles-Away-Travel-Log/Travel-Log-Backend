@@ -4,6 +4,18 @@ import Friend from "../models/friends.model.js";
 
 export async function postFriend(req, res) {
     const { sentRequest, receivedRequest, status } = req.body;
+
+    const exist = await Friend.findOne({
+        $or: [
+            { sentRequest: sentRequest, receivedRequest: receivedRequest },
+            { sentRequest: receivedRequest, receivedRequest: sentRequest },
+        ],
+    });
+
+    if (exist) {
+        return res.status(400).json({ msg: "Friend already exist" });
+    }
+
     try {
         const friend = new Friend({
             sentRequest,
@@ -12,7 +24,7 @@ export async function postFriend(req, res) {
         });
         await friend.save();
         res.status(200).json({
-            message: "Budget added",
+            message: "Friend added",
             friend: {
                 id: friend._id,
                 "request from": friend.sentRequest,
