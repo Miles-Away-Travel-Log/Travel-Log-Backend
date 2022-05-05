@@ -45,9 +45,9 @@ Content-Type: application/json
 ###
 
 
-get http://localhost:4000/users/6270dde6e87b8eebd7d2d827
+get http://localhost:4000/users/626a7adc4857f368b56a29b2
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzBkZGU2ZTg3YjhlZWJkN2QyZDgyNyIsInVzZXJOYW1lIjoiTW9oODgiLCJpYXQiOjE2NTE2NTQ5NzR9.wWd7LzDv6_U_0sQifJ_o1SgJVbqeZoJXTL98rOjHn3E
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNmE3YWRjNDg1N2YzNjhiNTZhMjliMiIsInVzZXJOYW1lIjoiTW9oODIiLCJpYXQiOjE2NTE3NDMzNzd9.q83vyeFfWEy05yA6lU6gMuGTMFPzUjY3x3QB35CiHXE
 
 
 
@@ -124,3 +124,9 @@ Content-Type: application/json
   "receivedRequest": "6270dde6e87b8eebd7d2d827",
   "status": false
 }
+
+
+###
+
+
+delete http://localhost:4000/users/6270dde6e87b8eebd7d2d827

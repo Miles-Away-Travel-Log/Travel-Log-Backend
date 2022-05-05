@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import Friend from "../models/friends.model.js";
+import seedMoney from "../models/seedMoney.model.js";
+import Budget from "../models/budget.model.js";
 
 // get User
 
@@ -223,23 +225,6 @@ export async function register(req, res) {
     }
 }
 
-// delete User
-
-export async function deleteUser(req, res) {
-    const id = req.params.id;
-    const user = await User.findById({ _id: id });
-    if (!user) {
-        res.status(400).send("User not found");
-        return;
-    }
-    try {
-        await User.findByIdAndDelete({ _id: id });
-        res.status(200).send("User deleted");
-    } catch (err) {
-        res.status(400).send(err);
-    }
-}
-
 // update User
 
 export async function updateUser(req, res) {
@@ -289,5 +274,29 @@ export async function updateUser(req, res) {
             message: "Update failed",
             errors: errors.array(),
         });
+    }
+}
+
+// delete User
+
+export async function deleteUser(req, res) {
+    const id = req.params.id;
+    const user = await User.findById({ _id: id });
+
+    if (!user) {
+        res.status(400).send("User not found");
+        return;
+    }
+    try {
+        await User.findByIdAndDelete({ _id: id });
+        await seedMoney.deleteMany({ user: id });
+        await Budget.deleteMany({ user: id });
+        await Friend.deleteMany({
+            $or: [{ sentRequest: id }, { receivedRequest: id }],
+        });
+
+        res.status(200).send("User deleted");
+    } catch (err) {
+        res.status(400).json(err);
     }
 }
