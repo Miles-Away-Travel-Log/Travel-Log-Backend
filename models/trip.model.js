@@ -7,6 +7,9 @@ const tripSchema = new Schema(
             type: String,
             required: true,
         },
+        tripType: {
+            type: String,
+        },
         description: {
             type: String,
             required: true,
@@ -34,7 +37,7 @@ const tripSchema = new Schema(
                 type: String,
             },
         },
-        home: {
+        startPoint: {
             longitude: {
                 type: Number,
             },
