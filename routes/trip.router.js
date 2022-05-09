@@ -34,7 +34,7 @@ routerTrip.route("/").post(
                 return true;
             }
         })
-        .withMessage("End date must be after start date"),
+        .withMessage("End date must be after or equal to start date"),
     permission(),
     postTrip
 );
