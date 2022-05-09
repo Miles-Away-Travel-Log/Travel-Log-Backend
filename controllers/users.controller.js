@@ -128,8 +128,8 @@ export async function getAllUser(req, res) {
 export async function login(req, res) {
     const { userName, password } = req.body;
     const user = await User.findOne({ userName })
-        .populate("seedMoney")
-        .populate("budget")
+        // .populate("seedMoney")
+        // .populate("budget")
         .exec();
     const aggregateFriends = await Friend.aggregate([
         {
@@ -160,8 +160,8 @@ export async function login(req, res) {
                     userName: user.userName,
                     friends: aggregateFriends,
                     avatar: user.avatar,
-                    seedMoney: user.seedMoney,
-                    budget: user.budget,
+                    // seedMoney: user.seedMoney,
+                    // budget: user.budget,
                     mapStyle: {
                         name: user.mapStyle.name,
                         link: user.mapStyle.link,
