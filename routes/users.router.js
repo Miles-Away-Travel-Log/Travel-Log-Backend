@@ -34,6 +34,7 @@ routerUsers.route("/register").post(
 routerUsers
     .route("/:id")
     .get(permission(), getUser)
+    /* .get(getUserTest) */
     .put(
         body("firstName")
             .optional()

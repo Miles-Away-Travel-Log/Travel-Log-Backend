@@ -21,9 +21,9 @@ const budgetSchema = new Schema({
     description: {
         type: String,
     },
-    user: {
+    trip: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Trips",
         required: true,
     },
 });
