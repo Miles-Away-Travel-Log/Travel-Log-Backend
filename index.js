@@ -7,6 +7,7 @@ import routerBudget from "./routes/budget.router.js";
 import routerSeedMoney from "./routes/seedMoney.router.js";
 import routerPDF from "./routes/pdf.router.js";
 import routerFriend from "./routes/friend.router.js";
+import routerTrip from "./routes/trip.router.js";
 import { auth } from "./middleware/AuthMiddleWare.js";
 
 const corsOption = {
@@ -40,6 +41,7 @@ app.use("/budget", routerBudget);
 app.use("/seed-money", routerSeedMoney);
 app.use("/pdf", routerPDF);
 app.use("/friend", routerFriend);
+app.use("/trip", routerTrip);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

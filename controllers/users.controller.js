@@ -5,53 +5,22 @@ import { validationResult } from "express-validator";
 import Friend from "../models/friends.model.js";
 import seedMoney from "../models/seedMoney.model.js";
 import Budget from "../models/budget.model.js";
+import Trip from "../models/trip.model.js";
 
 // get User
 
 export async function getUser(req, res) {
     const id = req.params.id;
+
     const idFromToken = req.tokenContent.id;
     const userNameFromToken = req.tokenContent.userName;
 
     let user;
-    let aggregateFriends;
 
-    if (id.length > 10 && idFromToken === id) {
-        user = await User.findById(id)
-            .populate("seedMoney")
-            .populate("budget")
-            .exec();
-
-        aggregateFriends = await Friend.aggregate([
-            {
-                $match: {
-                    $or: [
-                        { sentRequest: user._id },
-                        { receivedRequest: user._id },
-                    ],
-                },
-            },
-        ]);
-    } else if (id.length > 10 && idFromToken !== id) {
-        user = await User.findById(id).select("-password").exec();
-    } else if (id.length <= 10 && userNameFromToken === id) {
-        user = await User.findOne({ userName: id })
-            .populate("seedMoney")
-            .populate("budget")
-            .exec();
-
-        aggregateFriends = await Friend.aggregate([
-            {
-                $match: {
-                    $or: [
-                        { sentRequest: user._id },
-                        { receivedRequest: user._id },
-                    ],
-                },
-            },
-        ]);
-    } else if (id.length <= 10 && userNameFromToken !== id) {
-        user = await User.findOne({ userName: id }).select("-password").exec();
+    if (id.length <= 10) {
+        user = await User.findOne({ userName: id }).exec();
+    } else {
+        user = await User.findById(id).exec();
     }
 
     if (user === undefined || !user) {
@@ -59,32 +28,75 @@ export async function getUser(req, res) {
         return;
     }
 
-    res.status(200).json({
-        message: "User found",
-        user: {
-            id: user._id,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            userName: user.userName,
-            budget: user.budget,
-            seedMoney: user.seedMoney,
-            status: user.status,
-            friends: aggregateFriends ? aggregateFriends : [],
-            avatar: user.avatar,
-            mapStyle: {
-                name: user.mapStyle.name,
-                link: user.mapStyle.link,
-                iconColor: user.mapStyle.iconColor,
+    async function completeUserData() {
+        const aggregateFriends = await Friend.aggregate([
+            {
+                $match: {
+                    $or: [
+                        { sentRequest: user._id },
+                        { receivedRequest: user._id },
+                    ],
+                },
             },
-            home: {
-                longitude: user.home.longitude,
-                latitude: user.home.latitude,
-                city: user.home.city,
-                country: user.home.country,
+        ]);
+
+        const aggregateTrips = await Trip.aggregate([
+            {
+                $match: { participants: { $in: [user._id] } },
             },
-        },
-    });
+        ]);
+
+        res.status(200).json({
+            message: "User found",
+            user: {
+                id: user._id,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                userName: user.userName,
+                status: user.status,
+                friends: aggregateFriends ? aggregateFriends : [],
+                trips: aggregateTrips ? aggregateTrips : [],
+                avatar: user.avatar,
+                mapStyle: {
+                    name: user.mapStyle.name,
+                    link: user.mapStyle.link,
+                    iconColor: user.mapStyle.iconColor,
+                },
+                home: {
+                    longitude: user.home.longitude,
+                    latitude: user.home.latitude,
+                    city: user.home.city,
+                    country: user.home.country,
+                },
+            },
+        });
+    }
+
+    function partOfUserData() {
+        res.status(200).json({
+            message: "User found",
+            user: {
+                id: user._id,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                userName: user.userName,
+                status: user.status,
+                avatar: user.avatar,
+            },
+        });
+    }
+
+    if (id.length > 10 && idFromToken === id) {
+        completeUserData();
+    } else if (id.length > 10 && idFromToken !== id) {
+        partOfUserData();
+    } else if (id.length <= 10 && userNameFromToken === id) {
+        completeUserData();
+    } else if (id.length <= 10 && userNameFromToken !== id) {
+        partOfUserData();
+    }
 }
 
 // get all Users

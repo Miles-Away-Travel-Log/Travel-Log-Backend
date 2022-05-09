@@ -10,9 +10,9 @@ const seedMoneySchema = new Schema({
         type: String,
         required: true,
     },
-    user: {
+    trip: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Trips",
         required: true,
     },
 });
