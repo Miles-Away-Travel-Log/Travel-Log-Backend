@@ -47,52 +47,21 @@ export async function postTrip(req, res) {
     const errors = validationResult(req);
 
     if (errors.isEmpty()) {
-        const {
-            tripName,
-            tripType,
-            description,
-            startDate,
-            endDate,
-            mapStyle,
-            startPoint,
-            participants,
-        } = req.body;
 
-        const trip = new Trip({
-            tripName,
-            tripType,
-            description,
-            startDate,
-            endDate,
-            mapStyle,
-            startPoint,
-            participants,
-        });
+        const reqBody = req.body;
+
+        if (!reqBody) {
+            res.status(400).send("No trip submitted");
+            return;
+        }
+
+        const trip = new Trip(reqBody);
+
         await trip.save();
+
         res.status(200).json({
             message: "Trip added",
-            trip: {
-                id: trip._id,
-                tripName: trip.tripName,
-                tripType: trip.tripType,
-                description: trip.description,
-                startDate: trip.startDate,
-                endDate: trip.endDate,
-                mapStyle: {
-                    name: trip.mapStyle.name,
-                    link: trip.mapStyle.link,
-                    iconColor: trip.mapStyle.iconColor,
-                },
-                startPoint: {
-                    longitude: trip.mapStyle.longitude,
-                    latitude: trip.mapStyle.latitude,
-                    city: trip.mapStyle.city,
-                    country: trip.mapStyle.country,
-                },
-                participants: trip.participants,
-                seedMoney: trip.seedMoney,
-                budget: trip.budget,
-            },
+            trip: trip,
         });
     } else {
         res.status(400).json({
