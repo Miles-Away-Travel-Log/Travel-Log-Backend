@@ -8,6 +8,7 @@ export async function getTrip(req, res) {
     const trip = await Trip.findById(id)
         .populate("seedMoney")
         .populate("budget")
+        .populate("diary")
         .exec();
 
     if (trip === undefined || !trip) {
@@ -38,6 +39,7 @@ export async function getTrip(req, res) {
             participants: trip.participants,
             seedMoney: trip.seedMoney,
             budget: trip.budget,
+            diary: trip.diary,
         },
     });
 }
@@ -47,7 +49,6 @@ export async function postTrip(req, res) {
     const errors = validationResult(req);
 
     if (errors.isEmpty()) {
-
         const reqBody = req.body;
 
         if (!reqBody) {

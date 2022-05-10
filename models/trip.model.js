@@ -74,6 +74,12 @@ tripSchema.virtual("budget", {
     foreignField: "trip",
 });
 
+tripSchema.virtual("diary", {
+    ref: "Diary",
+    localField: "_id",
+    foreignField: "trip",
+});
+
 const Trip = model("Trips", tripSchema, "trips");
 
 export default Trip;
