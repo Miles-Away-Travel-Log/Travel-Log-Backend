@@ -37,6 +37,7 @@ export async function getTrip(req, res) {
                 country: trip.mapStyle.country,
             },
             participants: trip.participants,
+            visible: trip.visible,
             seedMoney: trip.seedMoney,
             budget: trip.budget,
             diary: trip.diary,

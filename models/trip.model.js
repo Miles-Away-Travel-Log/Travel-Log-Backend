@@ -52,8 +52,8 @@ const tripSchema = new Schema(
             },
         },
         visible: {
-            type: Boolean,
-            default: false,
+            type: String,
+            default: "private",
         },
     },
     {
