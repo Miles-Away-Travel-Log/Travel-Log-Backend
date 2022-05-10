@@ -35,27 +35,20 @@ export async function postTrip(req, res) {
     const errors = validationResult(req);
 
     if (errors.isEmpty()) {
-        const { tripName, startDate, endDate, description, participants } =
-            req.body;
+        const reqBody = req.body;
 
-        const trip = new Trip({
-            tripName,
-            startDate,
-            endDate,
-            description,
-            participants,
-        });
+        if (!reqBody) {
+            res.status(400).send("No trip submitted");
+            return;
+        }
+
+        const trip = new Trip(reqBody);
+
         await trip.save();
+
         res.status(200).json({
             message: "Trip added",
-            trip: {
-                id: trip._id,
-                name: trip.tripName,
-                startDate: trip.startDate,
-                endDate: trip.endDate,
-                description: trip.description,
-                participants: trip.participants,
-            },
+            trip: trip,
         });
     } else {
         res.status(400).json({

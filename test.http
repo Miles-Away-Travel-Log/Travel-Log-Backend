@@ -136,12 +136,13 @@ delete http://localhost:4000/users/6270dde6e87b8eebd7d2d827
 
 post http://localhost:4000/trip
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNmE3YWRjNDg1N2YzNjhiNTZhMjliMiIsInVzZXJOYW1lIjoiTW9oODIiLCJpYXQiOjE2NTE3NDMzNzd9.q83vyeFfWEy05yA6lU6gMuGTMFPzUjY3x3QB35CiHXE
 
 {
   "tripName": "Hamburg",
   "startDate": "2022-04-07",
-  "endDate": "2022-04-06",
-  "participants": ["62614e57545b5ca036e52881", "626fde017a5c9f43b1857a88"],
+  "endDate": "2022-04-07",
+  "participants": ["62614e57545b5ca036e52881", "626a7adc4857f368b56a29b2"],
   "description": "Wir fahren nach Amsterdam :)"
 }
 
@@ -170,3 +171,44 @@ Content-Type: application/json
   "endDate": "2022-04-10",
   "description": "Wir fahren nach Amsterdam :)"
 }
+
+
+###
+
+post http://localhost:4000/diary
+Content-Type: application/json
+
+{
+  "diaryName": "bla bla bla",
+  "date": "2022-04-07",
+  "author": "626fde017a5c9f43b1857a88",
+  "description": "Wir fahren nach Amsterdam :)",
+  "trip": "62791c0ec74647a8ea441bcf",
+  "images": ["Bild1", "Bild2"],
+  "home": {"latitude": 52.5170365, "longitude": 13.3888599, "city": "Berlin", "country": "Germany"}
+}
+
+
+###
+
+put http://localhost:4000/diary/627a1e1087e8a4219bd455dd
+Content-Type: application/json
+
+{
+  "diaryName": "bla bla bla bla ........",
+  "date": "2022-04-07",
+  "author": "626fde017a5c9f43b1857a88",
+  "description": "Wir fahren nach Amsterdam :)",
+  "trip": "62791c0ec74647a8ea441bcf",
+  "images": ["Bild1", "Bild2"],
+  "home": {"latitude": 52.5170365, "longitude": 13.3888599, "city": "Berlin", "country": "Germany"}
+}
+
+###
+
+get http://localhost:4000/diary/627a1e1087e8a4219bd455dd
+
+
+###
+
+delete http://localhost:4000/diary/627a1e1087e8a4219bd455dd

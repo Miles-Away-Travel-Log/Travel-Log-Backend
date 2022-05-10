@@ -14,14 +14,12 @@ const routerTrip = new Router();
 
 routerTrip.route("/").post(
     body("tripName")
-        .isAlpha()
-        .withMessage("Trip name must be alphabetic")
         .isLength({ min: 3, max: 30 })
         .withMessage("Trip name must be between 3 and 30 characters"),
     body("description")
         .isLength({ min: 3, max: 100 })
         .withMessage("Description must be between 3 and 100 characters"),
-    body("startDate").isDate().withMessage("Start date must be a date"),
+    /*     body("startDate").isDate().withMessage("Start date must be a date"),
     body("endDate").isDate().withMessage("End date must be a date"),
     check("endDate")
         .custom((value, { req }) => {
@@ -34,7 +32,7 @@ routerTrip.route("/").post(
                 return true;
             }
         })
-        .withMessage("End date must be after or equal to start date"),
+        .withMessage("End date must be after or equal to start date"), */
     permission(),
     postTrip
 );
