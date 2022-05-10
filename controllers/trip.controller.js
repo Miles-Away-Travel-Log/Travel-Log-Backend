@@ -19,10 +19,22 @@ export async function getTrip(req, res) {
         message: "Trip found",
         trip: {
             id: trip._id,
-            name: trip.tripName,
+            tripName: trip.tripName,
+            tripType: trip.tripType,
+            description: trip.description,
             startDate: trip.startDate,
             endDate: trip.endDate,
-            description: trip.description,
+            mapStyle: {
+                name: trip.mapStyle.name,
+                link: trip.mapStyle.link,
+                iconColor: trip.mapStyle.iconColor,
+            },
+            startPoint: {
+                longitude: trip.mapStyle.longitude,
+                latitude: trip.mapStyle.latitude,
+                city: trip.mapStyle.city,
+                country: trip.mapStyle.country,
+            },
             participants: trip.participants,
             seedMoney: trip.seedMoney,
             budget: trip.budget,
@@ -35,6 +47,7 @@ export async function postTrip(req, res) {
     const errors = validationResult(req);
 
     if (errors.isEmpty()) {
+
         const reqBody = req.body;
 
         if (!reqBody) {
