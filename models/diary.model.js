@@ -39,10 +39,13 @@ const diarySchema = new Schema({
     trip: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Trips",
-        required: true,
+        //required: true,
     },
     images: {
         type: [String],
+    },
+    titleImage: {
+        type: String,
     },
 });
 
