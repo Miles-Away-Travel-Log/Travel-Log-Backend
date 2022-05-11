@@ -221,3 +221,10 @@ delete http://localhost:4000/diary/627a1e1087e8a4219bd455dd
 get http://localhost:4000/users/6271385d6110a7b22b0a10a5
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzEzODVkNjExMGE3YjIyYjBhMTBhNSIsInVzZXJOYW1lIjoiSm9obm55IiwiaWF0IjoxNjUyMTgxODA5fQ.p_SElT6hQ8pR_4kpvm5ybAm1vC1_oC41QE1iDmRMkXU
+
+
+###
+
+get http://localhost:4000/trip/627b66b255c99b21f76a506b
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzEzODVkNjExMGE3YjIyYjBhMTBhNSIsInVzZXJOYW1lIjoiSm9obm55IiwiaWF0IjoxNjUyMjc1MTc3fQ.APsEUbxYpSG7qYol6czfJakG2nq--Yi92M7YCNfUwGU
