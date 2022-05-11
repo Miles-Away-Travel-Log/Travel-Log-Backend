@@ -36,6 +36,7 @@ export async function getTrip(req, res) {
                 city: trip.startPoint.city,
                 country: trip.startPoint.country,
             },
+            route: trip.route,
             participants: trip.participants,
             visible: trip.visible,
             seedMoney: trip.seedMoney,
