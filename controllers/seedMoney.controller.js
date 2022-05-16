@@ -6,18 +6,18 @@ export async function postSeedMoney(req, res) {
     const errors = validationResult(req);
 
     if (errors.isEmpty()) {
-        const { total, currency, user } = req.body;
+        const { total, currency, trip } = req.body;
         try {
             const seedMoney = new SeedMoney({
                 total,
                 currency,
-                user,
+                trip,
             });
             await seedMoney.save();
             res.status(200).json({
                 message: "Seed money added",
                 "Seed Money": {
-                    id: seedMoney._id,
+                    trip: seedMoney.trip,
                     total: seedMoney.total,
                     currency: seedMoney.currency,
                 },

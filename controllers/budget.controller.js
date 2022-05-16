@@ -6,7 +6,7 @@ export async function postBudget(req, res) {
     const errors = validationResult(req);
 
     if (errors.isEmpty()) {
-        const { type, value, date, category, description, user } = req.body;
+        const { type, value, date, category, description, trip } = req.body;
         try {
             const budget = new Budget({
                 type,
@@ -14,7 +14,7 @@ export async function postBudget(req, res) {
                 date,
                 category,
                 description,
-                user,
+                trip,
             });
             await budget.save();
             res.status(200).json({
@@ -26,6 +26,7 @@ export async function postBudget(req, res) {
                     date: budget.date,
                     category: budget.category,
                     description: budget.description,
+                    trip: budget.trip,
                 },
             });
         } catch (error) {

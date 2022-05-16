@@ -137,6 +137,13 @@ export async function login(req, res) {
             },
         },
     ]);
+
+    const aggregateTrips = await Trip.aggregate([
+        {
+            $match: { participants: { $in: [user._id] } },
+        },
+    ]);
+
     try {
         if (!user) {
             res.status(400).send("User not found");
@@ -158,6 +165,7 @@ export async function login(req, res) {
                     lastName: user.lastName,
                     userName: user.userName,
                     friends: aggregateFriends,
+                    trips: aggregateTrips,
                     avatar: user.avatar,
                     mapStyle: {
                         name: user.mapStyle.name,

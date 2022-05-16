@@ -1,17 +1,17 @@
 import buildPDF from "../service/pdf-service.js";
-import User from "../models/users.model.js";
+import Trip from "../models/trip.model.js";
 
 export async function getPDF(req, res) {
     const id = req.params.id;
 
-    const user = await User.findById(id).populate("budget").exec();
+    const trip = await Trip.findById(id).populate("budget").exec();
 
-    if (user === undefined) {
-        res.status(400).send("User not found");
+    if (trip === undefined) {
+        res.status(400).send("Trip not found");
         return;
     }
 
-    const userBudget = user.budget;
+    const tripBudget = trip.budget;
 
     const stream = res.writeHead(200, {
         "Content-Type": "application/pdf",
@@ -25,6 +25,6 @@ export async function getPDF(req, res) {
         () => {
             stream.end();
         },
-        userBudget
+        tripBudget
     );
 }

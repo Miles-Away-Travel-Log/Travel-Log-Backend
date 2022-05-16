@@ -5,45 +5,49 @@ import { validationResult } from "express-validator";
 export async function getTrip(req, res) {
     const id = req.params.id;
 
-    const trip = await Trip.findById(id)
-        .populate("seedMoney")
-        .populate("budget")
-        .populate("diary")
-        .exec();
+    try {
+        const trip = await Trip.findById(id)
+            .populate("seedMoney")
+            .populate("budget")
+            .populate("diary")
+            .exec();
 
-    if (trip === undefined || !trip) {
-        res.status(400).send("Trip not found");
-        return;
+        if (trip === undefined || !trip) {
+            res.status(400).send("Trip not found");
+            return;
+        }
+
+        res.status(200).json({
+            message: "Trip found",
+            trip: {
+                id: trip._id,
+                tripName: trip.tripName,
+                tripType: trip.tripType,
+                description: trip.description,
+                startDate: trip.startDate,
+                endDate: trip.endDate,
+                mapStyle: {
+                    name: trip.mapStyle.name,
+                    link: trip.mapStyle.link,
+                    iconColor: trip.mapStyle.iconColor,
+                },
+                startPoint: {
+                    longitude: trip.startPoint.longitude,
+                    latitude: trip.startPoint.latitude,
+                    city: trip.startPoint.city,
+                    country: trip.startPoint.country,
+                },
+                route: trip.route,
+                participants: trip.participants,
+                visible: trip.visible,
+                seedMoney: trip.seedMoney,
+                budget: trip.budget,
+                diary: trip.diary,
+            },
+        });
+    } catch (error) {
+        res.status(500).send(error);
     }
-
-    res.status(200).json({
-        message: "Trip found",
-        trip: {
-            id: trip._id,
-            tripName: trip.tripName,
-            tripType: trip.tripType,
-            description: trip.description,
-            startDate: trip.startDate,
-            endDate: trip.endDate,
-            mapStyle: {
-                name: trip.mapStyle.name,
-                link: trip.mapStyle.link,
-                iconColor: trip.mapStyle.iconColor,
-            },
-            startPoint: {
-                longitude: trip.startPoint.longitude,
-                latitude: trip.startPoint.latitude,
-                city: trip.startPoint.city,
-                country: trip.startPoint.country,
-            },
-            route: trip.route,
-            participants: trip.participants,
-            visible: trip.visible,
-            seedMoney: trip.seedMoney,
-            budget: trip.budget,
-            diary: trip.diary,
-        },
-    });
 }
 
 // post Trip
