@@ -22,7 +22,7 @@ const diarySchema = new Schema({
         type: Boolean,
         default: false,
     },
-    home: {
+    location: {
         longitude: {
             type: Number,
         },
@@ -40,6 +40,9 @@ const diarySchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Trips",
         //required: true,
+    },
+    pointId: {
+        type: Number,
     },
     images: {
         type: [String],
