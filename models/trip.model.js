@@ -26,6 +26,9 @@ const tripSchema = new Schema(
             type: [mongoose.Schema.Types.ObjectId],
             ref: "User",
         },
+        tripImage: {
+            type: String,
+        },
         mapStyle: {
             name: {
                 type: String,
