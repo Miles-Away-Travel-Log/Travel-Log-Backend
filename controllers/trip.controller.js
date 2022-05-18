@@ -43,6 +43,7 @@ export async function getTrip(req, res) {
                 seedMoney: trip.seedMoney,
                 budget: trip.budget,
                 diary: trip.diary,
+                tripImage: trip.tripImage,
             },
         });
     } catch (error) {
