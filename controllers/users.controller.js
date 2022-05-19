@@ -102,7 +102,7 @@ export async function getUser(req, res) {
 // get all Users
 
 export async function getAllUser(req, res) {
-    const listOfUsers = await User.find({ visible: true }).exec();
+    const listOfUsers = await User.find({}).exec();
 
     if (listOfUsers === undefined || listOfUsers.length === 0 || !listOfUsers) {
         res.status(400).send("No users found");
