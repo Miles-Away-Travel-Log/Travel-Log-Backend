@@ -84,6 +84,17 @@ export async function getUser(req, res) {
                 userName: user.userName,
                 status: user.status,
                 avatar: user.avatar,
+                mapStyle: {
+                    name: user.mapStyle.name,
+                    link: user.mapStyle.link,
+                    iconColor: user.mapStyle.iconColor,
+                },
+                home: {
+                    longitude: user.home.longitude,
+                    latitude: user.home.latitude,
+                    city: user.home.city,
+                    country: user.home.country,
+                },
             },
         });
     }
